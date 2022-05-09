@@ -28,6 +28,12 @@ const getAllMatches = async () => {
 
 const postMatch = async (matchData: IMatch) => {
   const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = matchData;
+  if (homeTeam === awayTeam) {
+    return { code: 401,
+      data: { message: 'It is not possible to create a match with two equal teams' },
+    };
+  }
+
   const newMatch = Matches.create({
     homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress,
   });
