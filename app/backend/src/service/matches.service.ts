@@ -1,6 +1,14 @@
 import Matches from '../database/models/matches';
 import Teams from '../database/models/teams';
 
+export interface IMatch {
+  homeTeam: number;
+  awayTeam: number;
+  homeTeamGoals: number;
+  awayTeamGoals: number;
+  inProgress: boolean;
+}
+
 const getAllMatches = async () => {
   const matches = await Matches.findAll({
     include: [{
@@ -18,4 +26,13 @@ const getAllMatches = async () => {
   return { code: 200, data: matches };
 };
 
-export default getAllMatches;
+const postMatch = async (matchData: IMatch) => {
+  const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = matchData;
+  const newMatch = Matches.create({
+    homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress,
+  });
+
+  return { code: 201, data: newMatch };
+};
+
+export { getAllMatches, postMatch };
