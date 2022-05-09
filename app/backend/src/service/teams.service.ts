@@ -5,4 +5,10 @@ const getAllTeams = async () => {
   return { code: 200, data: teams };
 };
 
-export default getAllTeams;
+const getTeamById = async (id: string) => {
+  const team = await Teams.findByPk(id);
+  if (!team) return { code: 404, data: { message: 'Team not found' } };
+  return { code: 200, data: team };
+};
+
+export { getAllTeams, getTeamById };
