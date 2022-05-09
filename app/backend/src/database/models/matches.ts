@@ -13,7 +13,7 @@ export default class Matches extends Model {
 
   public awayTeamGoals: number;
 
-  public inProgress: number;
+  public inProgress: boolean;
 }
 
 Matches.init({
@@ -39,7 +39,7 @@ Matches.init({
     allowNull: false,
   },
   inProgress: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.BOOLEAN,
     allowNull: false,
   },
 }, {

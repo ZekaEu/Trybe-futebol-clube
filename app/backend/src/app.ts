@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { loginRouter, teamsRouter } from './routes';
+import { loginRouter, matchesRouter, teamsRouter } from './routes';
 import error from './middleware/error';
 
 class App {
@@ -23,7 +23,8 @@ class App {
     this.app.use(accessControl);
     this.app.use(express.json());
     this.app.use('/login', loginRouter);
-    this.app.use('teams', teamsRouter);
+    this.app.use('/teams', teamsRouter);
+    this.app.use('/matches', matchesRouter);
     this.app.use(error);
   }
 
