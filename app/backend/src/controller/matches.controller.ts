@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { getAllMatches, postMatch } from '../service/matches.service';
+import { getAllMatches, postMatch, updateMatch } from '../service/matches.service';
 
 const getAll = async (_req: Request, res: Response, next: NextFunction) => {
   try {
@@ -19,4 +19,14 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { getAll, create };
+const update = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+    const { code, data } = await updateMatch(id);
+    return res.status(code).json(data);
+  } catch (e) {
+    next(e);
+  }
+};
+
+export { getAll, create, update };

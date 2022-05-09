@@ -35,4 +35,9 @@ const postMatch = async (matchData: IMatch) => {
   return { code: 201, data: newMatch };
 };
 
-export { getAllMatches, postMatch };
+const updateMatch = async (id: string) => {
+  await Matches.update({ inProgress: false }, { where: { id } });
+  return { code: 200, data: { message: 'Match ended' } };
+};
+
+export { getAllMatches, postMatch, updateMatch };
