@@ -13,7 +13,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const getUserRole = async (req: Request, res: Response, next: NextFunction) => {
+const getUserRole = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const { userData } = res.locals;
     const { code, data } = await getUser(userData);
