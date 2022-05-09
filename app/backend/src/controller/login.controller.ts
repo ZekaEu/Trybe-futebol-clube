@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import getUser from '../service/user.service';
 import loginTry from '../service/login.service';
 
 const login = async (req: Request, res: Response, next: NextFunction) => {
@@ -14,8 +15,9 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
 
 const getUserRole = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { user: { role } } = req.body;
-    return res.status(200).json(role);
+    const { userData } = res.locals;
+    const { code, data } = await getUser(userData);
+    return res.status(code).json(data);
   } catch (e) {
     next(e);
   }
