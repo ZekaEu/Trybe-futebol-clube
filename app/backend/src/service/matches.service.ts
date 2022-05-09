@@ -48,9 +48,14 @@ const postMatch = async (matchData: IMatch) => {
   return { code: 201, data: newMatch };
 };
 
-const updateMatch = async (id: string) => {
+const endMatch = async (id: string) => {
   await Matches.update({ inProgress: false }, { where: { id } });
   return { code: 200, data: { message: 'Match ended' } };
 };
 
-export { getAllMatches, postMatch, updateMatch };
+const updateMatch = async (id: string, homeTeamGoals: number, awayTeamGoals: number) => {
+  await Matches.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+  return { code: 200, data: { message: 'Match updated' } };
+};
+
+export { getAllMatches, postMatch, endMatch, updateMatch };

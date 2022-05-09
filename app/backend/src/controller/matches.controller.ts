@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { getAllMatches, postMatch, updateMatch } from '../service/matches.service';
+import { endMatch, getAllMatches, postMatch, updateMatch } from '../service/matches.service';
 
 const getAll = async (_req: Request, res: Response, next: NextFunction) => {
   try {
@@ -22,7 +22,13 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 const update = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const { code, data } = await updateMatch(id);
+    const { homeTeamGoals, awayTeamGoals } = req.body;
+    if (homeTeamGoals || awayTeamGoals) {
+      const { code, data } = await updateMatch(id, homeTeamGoals, awayTeamGoals);
+      return res.status(code).json(data);
+    }
+
+    const { code, data } = await endMatch(id);
     return res.status(code).json(data);
   } catch (e) {
     next(e);
