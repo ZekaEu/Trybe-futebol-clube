@@ -7,7 +7,7 @@ const getAllTeams = async () => {
 
 const getTeamById = async (id: string) => {
   const team = await Teams.findByPk(id);
-  if (!team) return { code: 404, data: { message: 'Team not found' } };
+  if (!team) return { code: 404, data: { message: 'There is no team with such id!' } };
   return { code: 200, data: team };
 };
 

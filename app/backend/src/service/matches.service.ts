@@ -29,12 +29,19 @@ const getAllMatches = async () => {
 const postMatch = async (matchData: IMatch) => {
   const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = matchData;
   if (homeTeam === awayTeam) {
-    return { code: 401,
+    return {
+      code: 401,
       data: { message: 'It is not possible to create a match with two equal teams' },
     };
   }
 
-  const newMatch = Matches.create({
+  const getHomeTeam = await Teams.findByPk(homeTeam);
+  const getAwayTeam = await Teams.findByPk(awayTeam);
+  if (!getHomeTeam || !getAwayTeam) {
+    return { code: 404, data: { message: 'There is no team with such id!' } };
+  }
+
+  const newMatch = await Matches.create({
     homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress,
   });
 
