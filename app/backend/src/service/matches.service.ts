@@ -2,6 +2,7 @@ import Matches from '../database/models/matches';
 import Teams from '../database/models/teams';
 
 export interface IMatch {
+  id?:number;
   homeTeam: number;
   awayTeam: number;
   homeTeamGoals: number;
